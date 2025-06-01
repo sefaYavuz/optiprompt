@@ -1,41 +1,171 @@
+"use client"
+
 import { Button } from "@/components/ui/button"
 import Link from "next/link"
+import { useState } from "react"
+import { motion } from "framer-motion"
+import { FADE_DOWN_ANIMATION_VARIANTS, STAGGER_ANIMATION_PROPS } from "@/lib/animations"
+
+const codeExamples = [
+	{
+		title: "OpenAI",
+		code: `const response = await fetch('https://api.openai.com/v1/chat/completions', {
+  method: 'POST',
+  headers: { 'Authorization': 'Bearer ' + process.env.OPENAI_API_KEY },
+  body: JSON.stringify({
+    model: 'gpt-4',
+    messages: [{ role: 'user', content: prompt }]
+  })
+})`,
+		optimizedCode: `import { OptiPrompt } from 'optiprompt'
+
+const client = new OptiPrompt()
+const response = await client.complete({
+  prompt,  // Automatically cached & optimized
+  model: 'gpt-4'
+})`,
+	},
+	{
+		title: "Claude",
+		code: `const response = await fetch('https://api.anthropic.com/v1/messages', {
+  method: 'POST',
+  headers: { 'x-api-key': process.env.ANTHROPIC_API_KEY },
+  body: JSON.stringify({
+    model: 'claude-3-opus',
+    messages: [{ role: 'user', content: prompt }]
+  })
+})`,
+		optimizedCode: `import { OptiPrompt } from 'optiprompt'
+
+const client = new OptiPrompt()
+const response = await client.complete({
+  prompt,  // Automatically cached & optimized
+  model: 'claude-3-opus'
+})`,
+	},
+]
 
 export function Hero() {
-  return (
-    <section className="relative py-20 px-4 md:px-6 lg:px-8 bg-gradient-to-b from-white to-gray-50">
-      <div className="max-w-7xl mx-auto">
-        <div className="text-center space-y-8">
-          <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold tracking-tight text-gray-900">
-            Save on Every AI Prompt
-          </h1>
-          <p className="text-lg md:text-xl text-gray-600 max-w-3xl mx-auto">
-            Smart caching and analytics for OpenAI, Claude, DeepSeek and more
-          </p>
-          <div className="flex items-center justify-center gap-4">
-            <Link href="/login">
-              <Button size="lg" className="rounded-full px-8">
-                Start Saving Now
-              </Button>
-            </Link>
-            <Link href="/docs">
-              <Button variant="outline" size="lg" className="rounded-full px-8">
-                View Documentation
-              </Button>
-            </Link>
-          </div>
-        </div>
-        <div className="mt-16">
-          <div className="relative w-full max-w-4xl mx-auto aspect-video rounded-lg overflow-hidden shadow-xl border border-gray-200">
-            <div className="absolute inset-0 bg-gradient-to-br from-blue-50 to-indigo-50 flex items-center justify-center">
-              <div className="text-center space-y-4">
-                <div className="text-2xl font-semibold text-gray-700">Dashboard Preview</div>
-                <p className="text-gray-500">Beautiful analytics and insights coming soon</p>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
-  )
+	const [activeExample, setActiveExample] = useState(0)
+
+	return (
+		<section className="relative py-20 px-4 md:px-6 lg:px-8 bg-[#0d1117] min-h-[90vh] flex items-center">
+			<div className="max-w-7xl mx-auto">
+				<div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+					<motion.div
+						className="space-y-8"
+						initial="hidden"
+						animate="show"
+						viewport={{ once: true }}
+						variants={{
+							hidden: {},
+							show: {
+								transition: {
+									staggerChildren: 0.15,
+								},
+							},
+						}}
+					>
+						<motion.h1
+							className="text-4xl md:text-6xl font-bold tracking-tight text-white"
+							variants={FADE_DOWN_ANIMATION_VARIANTS}
+						>
+							Your AI Just Got{" "}
+							<span className="bg-gradient-to-r from-blue-500 to-violet-500 bg-clip-text text-transparent">
+								Smarter
+							</span>
+						</motion.h1>
+						<motion.p
+							className="text-xl text-gray-400 max-w-xl"
+							variants={FADE_DOWN_ANIMATION_VARIANTS}
+						>
+							OptiPrompt helps you cut AI costs by up to 70% through smart caching
+							and optimization, without changing your code.
+						</motion.p>
+						<motion.div
+							className="flex items-center gap-4"
+							variants={FADE_DOWN_ANIMATION_VARIANTS}
+						>
+							<Link href="/login">
+								<Button
+									size="lg"
+									className="px-8"
+								>
+									Start Saving Now
+								</Button>
+							</Link>
+							<Link href="/docs">
+								<Button
+									variant="outline"
+									size="lg"
+								>
+									View Documentation
+								</Button>
+							</Link>
+						</motion.div>
+					</motion.div>
+
+					<motion.div
+						className="relative rounded-xl overflow-hidden border border-gray-800 bg-[#0d1117]"
+						initial={{ opacity: 0, x: 20 }}
+						whileInView={{ opacity: 1, x: 0 }}
+						viewport={{ once: true }}
+						transition={{ type: "spring", duration: 0.8 }}
+					>
+						<div className="flex items-center gap-2 px-4 py-2 bg-gray-900/50 border-b border-gray-800">
+							{codeExamples.map((example, index) => (
+								<button
+									key={example.title}
+									onClick={() => setActiveExample(index)}
+									className={`px-3 py-1 rounded-md text-sm transition-colors ${
+										activeExample === index
+											? "bg-blue-600 text-white"
+											: "text-gray-400 hover:text-gray-300"
+									}`}
+								>
+									{example.title}
+								</button>
+							))}
+						</div>
+						<div className="p-4 space-y-6">
+							<div className="space-y-4">
+								<motion.div
+									key={activeExample}
+									initial={{ opacity: 0, y: 10 }}
+									animate={{ opacity: 1, y: 0 }}
+									transition={{ type: "spring" }}
+									className="font-mono text-sm text-gray-400 bg-gray-900/50 p-4 rounded-lg"
+								>
+									<pre className="whitespace-pre-wrap">
+										{codeExamples[activeExample].code}
+									</pre>
+								</motion.div>
+								<div className="relative">
+									<div className="absolute inset-0 flex items-center">
+										<div className="w-full border-t border-gray-800" />
+									</div>
+									<div className="relative flex justify-center">
+										<span className="bg-[#0d1117] px-2 text-sm text-gray-500">
+											With OptiPrompt
+										</span>
+									</div>
+								</div>
+								<motion.div
+									key={`optimized-${activeExample}`}
+									initial={{ opacity: 0, y: 10 }}
+									animate={{ opacity: 1, y: 0 }}
+									transition={{ type: "spring", delay: 0.1 }}
+									className="font-mono text-sm text-blue-400 bg-blue-900/20 p-4 rounded-lg border border-blue-800/50"
+								>
+									<pre className="whitespace-pre-wrap">
+										{codeExamples[activeExample].optimizedCode}
+									</pre>
+								</motion.div>
+							</div>
+						</div>
+					</motion.div>
+				</div>
+			</div>
+		</section>
+	)
 }
