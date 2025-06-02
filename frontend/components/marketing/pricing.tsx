@@ -8,29 +8,30 @@ import { FADE_UP_ANIMATION_VARIANTS, STAGGER_ANIMATION_PROPS } from "@/lib/anima
 
 const plans = [
 	{
-		name: "Starter",
-		price: "$49",
-		description: "Perfect for small teams and startups",
+		name: "Free",
+		price: "$0",
+		description: "Try OptiPrompt with basic features",
 		features: [
-			"Up to 100,000 requests/month",
+			"1,000 requests/month",
 			"Basic prompt caching",
-			"Usage analytics",
-			"24-hour support response time",
-			"API access",
+			"Limited analytics",
+			"Community support",
+			"3-day data retention",
+			"Monthly usage reset",
 		],
 	},
 	{
 		name: "Pro",
-		price: "$199",
-		description: "For growing companies with serious AI usage",
+		price: "$29",
+		description: "For developers and AI enthusiasts",
 		features: [
 			"Unlimited requests",
 			"Advanced semantic caching",
-			"Custom routing rules",
-			"Priority support (4-hour response)",
-			"Advanced analytics",
-			"Custom integrations",
-			"Team management",
+			"Detailed analytics & insights",
+			"Email support",
+			"API access",
+			"30-day data retention",
+			"Custom model selection",
 		],
 		popular: true,
 	},
@@ -38,7 +39,7 @@ const plans = [
 
 export function Pricing() {
 	return (
-		<section className="py-20 px-4 md:px-6 lg:px-8 bg-[#0d1117] border-t border-gray-800">
+		<section className="py-20 px-4 md:px-6 lg:px-8 bg-[#0d1117] border-t border-[#4E71FF]/20">
 			<div className="max-w-7xl mx-auto">
 				<motion.div
 					className="text-center mb-16"
@@ -47,75 +48,62 @@ export function Pricing() {
 					viewport={{ once: true, margin: "-100px" }}
 					transition={{ delay: 0.2 }}
 				>
-					<h2 className="text-3xl font-bold tracking-tight text-white">
-						Simple, transparent pricing
+					<h2 className="text-3xl font-bold tracking-tight text-white mb-4">
+						Simple pricing, powerful features
 					</h2>
-					<p className="mt-4 text-lg text-gray-400">
-						Start saving on your AI costs today
+					<p className="text-lg text-[#8DD8FF]">
+						Start for free, upgrade for unlimited AI optimization
+					</p>
+					<p className="mt-2 text-[#8DD8FF]/70 text-sm">
+						Most teams exceed the free tier within their first week of using OptiPrompt
 					</p>
 				</motion.div>
+
 				<motion.div
-					className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-5xl mx-auto"
+					className="grid grid-cols-1 md:grid-cols-2 gap-8 lg:gap-12 max-w-4xl mx-auto"
 					{...STAGGER_ANIMATION_PROPS}
 				>
 					{plans.map((plan) => (
 						<motion.div
 							key={plan.name}
 							variants={FADE_UP_ANIMATION_VARIANTS}
-							className={`relative p-8 bg-gray-900/50 rounded-xl border ${
+							className={`relative rounded-2xl border ${
 								plan.popular
-									? "border-blue-500/50 bg-blue-500/5"
-									: "border-gray-800"
-							}`}
-							whileHover={{ y: -5 }}
-							transition={{ duration: 0.2 }}
+									? "border-[#5409DA] bg-gradient-to-b from-[#5409DA]/10 to-transparent"
+									: "border-[#4E71FF]/20 hover:border-[#4E71FF]/40"
+							} p-8 transition-colors duration-200 flex flex-col justify-between`}
 						>
 							{plan.popular && (
-								<div className="absolute -top-4 left-1/2 -translate-x-1/2">
-									<div className="bg-blue-500 text-white px-3 py-1 rounded-full text-sm font-medium">
+								<div className="absolute -top-5 left-0 right-0 flex justify-center">
+									<div className="bg-[#5409DA] text-white px-4 py-1 rounded-full text-sm font-medium">
 										Most Popular
 									</div>
 								</div>
 							)}
-							<div>
-								<h3 className="text-2xl font-bold text-white">
-									{plan.name}
-								</h3>
-								<div className="mt-2 flex items-baseline">
-									<span className="text-4xl font-bold text-white">
-										{plan.price}
-									</span>
-									<span className="text-gray-400 ml-1">/month</span>
+							<div className="mb-8">
+								<h3 className="text-xl font-bold text-white mb-2">{plan.name}</h3>
+								<div className="flex items-baseline gap-2">
+									<span className="text-4xl font-bold text-white">{plan.price}</span>
+									<span className="text-[#8DD8FF]">{plan.price === "$0" ? "forever" : "/month"}</span>
 								</div>
-								<p className="text-gray-400 mt-2">{plan.description}</p>
+								<p className="mt-2 text-[#8DD8FF]">{plan.description}</p>
 							</div>
-							<ul className="mt-8 space-y-4">
+							<ul className="space-y-4 mb-8">
 								{plan.features.map((feature) => (
 									<li key={feature} className="flex items-center gap-3">
-										<CheckIcon
-											className={`h-5 w-5 ${
-												plan.popular
-													? "text-blue-400"
-													: "text-green-400"
-											}`}
-										/>
-										<span className="text-gray-300">{feature}</span>
+										<CheckIcon className="h-5 w-5 text-[#4E71FF]" />
+										<span className="text-[#8DD8FF]">{feature}</span>
 									</li>
 								))}
 							</ul>
-							<div className="mt-8">
-								<Link href="/login" className="block">
-									<Button
-										className={`w-full ${
-											plan.popular
-												? "bg-blue-600 hover:bg-blue-700 text-white"
-												: "bg-gray-800 hover:bg-gray-700 text-white"
-										}`}
-									>
-										Get started with {plan.name}
-									</Button>
-								</Link>
-							</div>
+							<Link href={plan.price === "$0" ? "/signup" : "/signup?plan=pro"} className="block">
+								<Button
+									variant={plan.popular ? "default" : "outline"}
+									className="w-full"
+								>
+									{plan.price === "$0" ? "Get Started" : "Upgrade Now"}
+								</Button>
+							</Link>
 						</motion.div>
 					))}
 				</motion.div>

@@ -1,6 +1,7 @@
 "use client"
 
 import { Button } from "@/components/ui/button"
+import { BackgroundGradient } from "@/components/ui/background-gradient"
 import Link from "next/link"
 import { useState } from "react"
 import { motion } from "framer-motion"
@@ -71,7 +72,7 @@ export function Hero() {
 							variants={FADE_DOWN_ANIMATION_VARIANTS}
 						>
 							Your AI Just Got{" "}
-							<span className="bg-gradient-to-r from-blue-500 to-violet-500 bg-clip-text text-transparent">
+							<span className="bg-gradient-to-r from-[#5409DA] via-[#4E71FF] to-[#8DD8FF] bg-clip-text text-transparent">
 								Smarter
 							</span>
 						</motion.h1>
@@ -86,7 +87,7 @@ export function Hero() {
 							className="flex items-center gap-4"
 							variants={FADE_DOWN_ANIMATION_VARIANTS}
 						>
-							<Link href="/login">
+							<Link href="/auth/sign-in?redirect_url=/dashboard">
 								<Button
 									size="lg"
 									className="px-8"
@@ -105,62 +106,78 @@ export function Hero() {
 						</motion.div>
 					</motion.div>
 
-					<motion.div
-						className="relative rounded-xl overflow-hidden border border-gray-800 bg-[#0d1117]"
-						initial={{ opacity: 0, x: 20 }}
-						whileInView={{ opacity: 1, x: 0 }}
+					<motion.div 
+						className="relative"
+						initial={{ opacity: 0, scale: 0.95 }}
+						whileInView={{ opacity: 1, scale: 1 }}
 						viewport={{ once: true }}
 						transition={{ type: "spring", duration: 0.8 }}
 					>
-						<div className="flex items-center gap-2 px-4 py-2 bg-gray-900/50 border-b border-gray-800">
-							{codeExamples.map((example, index) => (
-								<button
-									key={example.title}
-									onClick={() => setActiveExample(index)}
-									className={`px-3 py-1 rounded-md text-sm transition-colors ${
-										activeExample === index
-											? "bg-blue-600 text-white"
-											: "text-gray-400 hover:text-gray-300"
-									}`}
-								>
-									{example.title}
-								</button>
-							))}
-						</div>
-						<div className="p-4 space-y-6">
-							<div className="space-y-4">
-								<motion.div
-									key={activeExample}
-									initial={{ opacity: 0, y: 10 }}
-									animate={{ opacity: 1, y: 0 }}
-									transition={{ type: "spring" }}
-									className="font-mono text-sm text-gray-400 bg-gray-900/50 p-4 rounded-lg"
-								>
-									<pre className="whitespace-pre-wrap">
-										{codeExamples[activeExample].code}
-									</pre>
-								</motion.div>
-								<div className="relative">
-									<div className="absolute inset-0 flex items-center">
-										<div className="w-full border-t border-gray-800" />
+						<motion.div
+							initial={{ opacity: 0 }}
+							animate={{ opacity: 1 }}
+							transition={{ delay: 0.2 }}
+						>
+							<BackgroundGradient
+								containerClassName="absolute -inset-1 z-0"
+								className="rounded-xl opacity-100"
+								animate={false}
+							/>
+						</motion.div>
+						
+						<div
+							className="relative z-10 rounded-xl overflow-hidden border border-[#4E71FF]/20 bg-[#0d1117]"
+						>
+							<div className="flex items-center gap-2 p-4 bg-[#0d1117]/50 border-b border-[#4E71FF]/20">
+								{codeExamples.map((example, index) => (
+									<button
+										key={example.title}
+										onClick={() => setActiveExample(index)}
+										className={`px-3 py-1 rounded-md text-sm transition-colors ${
+											activeExample === index
+												? "bg-[#5409DA] text-white"
+												: "text-[#8DD8FF]/70 hover:text-[#8DD8FF]"
+										}`}
+									>
+										{example.title}
+									</button>
+								))}
+							</div>
+							<div className="p-4 space-y-6">
+								<div className="space-y-4">
+									<motion.div
+										key={activeExample}
+										initial={{ opacity: 0, y: 10 }}
+										animate={{ opacity: 1, y: 0 }}
+										transition={{ type: "spring" }}
+										className="font-mono text-sm text-[#8DD8FF]/70 bg-[#0d1117]/50 p-4 rounded-lg border border-[#4E71FF]/10"
+									>
+										<pre className="whitespace-pre-wrap">
+											{codeExamples[activeExample].code}
+										</pre>
+									</motion.div>
+									<div className="relative">
+										<div className="absolute inset-0 flex items-center">
+											<div className="w-full border-t border-[#4E71FF]/20" />
+										</div>
+										<div className="relative flex justify-center">
+											<span className="bg-[#0d1117] px-2 text-sm text-[#8DD8FF]/50">
+												With OptiPrompt
+											</span>
+										</div>
 									</div>
-									<div className="relative flex justify-center">
-										<span className="bg-[#0d1117] px-2 text-sm text-gray-500">
-											With OptiPrompt
-										</span>
-									</div>
+									<motion.div
+										key={`optimized-${activeExample}`}
+										initial={{ opacity: 0, y: 10 }}
+										animate={{ opacity: 1, y: 0 }}
+										transition={{ type: "spring", delay: 0.1 }}
+										className="font-mono text-sm text-[#8DD8FF] bg-[#5409DA]/10 p-4 rounded-lg border border-[#4E71FF]/30"
+									>
+										<pre className="whitespace-pre-wrap">
+											{codeExamples[activeExample].optimizedCode}
+										</pre>
+									</motion.div>
 								</div>
-								<motion.div
-									key={`optimized-${activeExample}`}
-									initial={{ opacity: 0, y: 10 }}
-									animate={{ opacity: 1, y: 0 }}
-									transition={{ type: "spring", delay: 0.1 }}
-									className="font-mono text-sm text-blue-400 bg-blue-900/20 p-4 rounded-lg border border-blue-800/50"
-								>
-									<pre className="whitespace-pre-wrap">
-										{codeExamples[activeExample].optimizedCode}
-									</pre>
-								</motion.div>
 							</div>
 						</div>
 					</motion.div>
