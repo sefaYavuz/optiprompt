@@ -21,10 +21,10 @@ export function MarketingHeader() {
     <motion.header 
       initial={{ y: -100 }}
       animate={{ y: 0 }}
-      className={`fixed top-0 left-0 right-0 z-50 transition-colors duration-200 ${
+      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
         isScrolled 
-          ? "bg-[#0d1117]/95 backdrop-blur-md shadow-lg border-[#4E71FF]/20" 
-          : "bg-[#0d1117]/80 backdrop-blur-sm border-transparent"
+          ? "bg-background/95 backdrop-blur-md shadow-lg border-[#8CCDEB]/10" 
+          : "bg-background/50 backdrop-blur-sm border-transparent"
       } border-b`}
     >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -35,8 +35,10 @@ export function MarketingHeader() {
             initial="hidden"
             animate="show"
           >
-            <Link href="/" className="text-xl font-bold bg-gradient-to-r from-[#5409DA] via-[#4E71FF] to-[#8DD8FF] bg-clip-text text-transparent hover:opacity-90 transition-opacity">
-              OptiPrompt
+            <Link href="/" className="text-xl font-bold">
+              <span className="inline-block bg-[linear-gradient(45deg,#8CCDEB,#725CAD)] bg-clip-text text-transparent hover:opacity-90 transition-opacity">
+                OptiPrompt
+              </span>
             </Link>
           </motion.div>
           <motion.nav 
@@ -47,22 +49,24 @@ export function MarketingHeader() {
           >
             <Link 
               href="/docs" 
-              className="text-[#8DD8FF] hover:text-[#BBFBFF] transition-colors"
+              className="text-[#8CCDEB] hover:text-[#8CCDEB]/80 transition-colors"
             >
               Documentation
             </Link>
             <Link 
               href="/about" 
-              className="text-[#8DD8FF] hover:text-[#BBFBFF] transition-colors"
+              className="text-[#8CCDEB] hover:text-[#8CCDEB]/80 transition-colors"
             >
               About
             </Link>
-            <Link href="/login">
-              <Button 
-                variant="outline"
-                className="border-[#4E71FF]/30 hover:border-[#4E71FF]/60"
-              >
+            <Link href="/auth/sign-in">
+              <Button variant="outline" className="border-[#8CCDEB]/20 text-[#8CCDEB] hover:bg-[#8CCDEB]/10">
                 Sign in
+              </Button>
+            </Link>
+            <Link href="/auth/sign-up">
+              <Button className="bg-[linear-gradient(45deg,#725CAD,#8CCDEB)] hover:opacity-90 transition-opacity border-0">
+                Get Started
               </Button>
             </Link>
           </motion.nav>

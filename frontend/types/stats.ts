@@ -1,3 +1,16 @@
+export interface UsageData {
+  timestamp: string
+  requests: number
+  cost: number
+  savings: number
+}
+
+export interface ModelDistribution {
+  name: string
+  requests: number
+  percentage: number
+}
+
 export interface DashboardStats {
   totalRequests: number
   totalCost: number
@@ -11,4 +24,6 @@ export interface DashboardStats {
     requests: number
   }[]
   estimatedSavings: number
+  usageData: UsageData[]
+  modelDistribution: ModelDistribution[]
 }

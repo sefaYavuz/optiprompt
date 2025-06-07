@@ -5,6 +5,7 @@ import { Skeleton } from "@/components/ui/skeleton"
 import { useStats } from "@/hooks/useStats"
 import { AlertCircle, Database, Zap, DollarSign, ArrowUpRight } from "lucide-react"
 import { Alert, AlertDescription } from "@/components/ui/alert"
+import { cn } from "@/lib/utils"
 
 export function StatsGrid() {
   const { data, isLoading, isError } = useStats()
@@ -43,22 +44,30 @@ export function StatsGrid() {
       title: "Total Requests",
       value: data?.totalRequests.toLocaleString() || "0",
       icon: Zap,
+      color: "text-[#725CAD]",
+      bgColor: "bg-[#725CAD]/10"
     },
     {
       title: "Cache Hit Rate",
       value: `${data?.cacheHitRate.exact.toFixed(1)}% / ${data?.cacheHitRate.semantic.toFixed(1)}%`,
       subtitle: "Exact / Semantic",
       icon: Database,
+      color: "text-[#8CCDEB]",
+      bgColor: "bg-[#8CCDEB]/10"
     },
     {
       title: "Total Cost",
       value: `$${data?.totalCost.toFixed(2)}`,
       icon: DollarSign,
+      color: "text-[#FF8C42]",
+      bgColor: "bg-[#FF8C42]/10"
     },
     {
       title: "Estimated Savings",
       value: `$${data?.estimatedSavings.toFixed(2)}`,
       icon: ArrowUpRight,
+      color: "text-green-500",
+      bgColor: "bg-green-500/10",
       positive: true,
     },
   ]
@@ -66,17 +75,20 @@ export function StatsGrid() {
   return (
     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
       {stats.map((stat) => (
-        <Card key={stat.title}>
-          <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-            <CardTitle className="text-sm font-medium">
+        <Card key={stat.title} className="relative overflow-hidden">
+          <div className={cn("absolute inset-0 opacity-20", stat.bgColor)} />
+          <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2 relative">
+            <CardTitle className={cn("text-sm font-medium", stat.color)}>
               {stat.title}
             </CardTitle>
-            <stat.icon className="h-4 w-4 text-muted-foreground" />
+            <div className={cn("p-2 rounded-full", stat.bgColor)}>
+              <stat.icon className={cn("h-4 w-4", stat.color)} />
+            </div>
           </CardHeader>
-          <CardContent>
-            <div className="text-2xl font-bold">{stat.value}</div>
+          <CardContent className="relative">
+            <div className={cn("text-2xl font-bold", stat.color)}>{stat.value}</div>
             {stat.subtitle && (
-              <p className="text-xs text-muted-foreground">
+              <p className={cn("text-xs", stat.color, "opacity-80")}>
                 {stat.subtitle}
               </p>
             )}

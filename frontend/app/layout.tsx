@@ -12,8 +12,8 @@ export default function RootLayout({
 }) {
   return (
     <ClerkProvider>
-      <html lang="en" className="h-full">
-        <body className={`${inter.className} h-full`}>
+      <html lang="en" className="h-full dark">
+        <body className={`${inter.className} h-full bg-background text-foreground`}>
           <QueryProvider>
             {children}
           </QueryProvider>

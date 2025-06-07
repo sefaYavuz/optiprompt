@@ -22,6 +22,8 @@ import { Badge } from "@/components/ui/badge"
 import { ChevronLeft, ChevronRight } from "lucide-react"
 import { useLogs } from '@/hooks/useLogs'
 import type { Log } from '@/types/logs'
+import { Card } from "@/components/ui/card"
+import { formatDistanceToNow } from "date-fns"
 
 export function LogsTable() {
   const [page, setPage] = useState(1)
@@ -82,44 +84,58 @@ export function LogsTable() {
       </div>
 
       <div className="rounded-md border">
-        <Table>
-          <TableHeader>
-            <TableRow>
-              <TableHead>Timestamp</TableHead>
-              <TableHead>Prompt</TableHead>
-              <TableHead>Model</TableHead>
-              <TableHead>Tokens</TableHead>
-              <TableHead>Cost</TableHead>
-              <TableHead>Cache</TableHead>
-            </TableRow>
-          </TableHeader>
-          <TableBody>
-            {isLoading ? (
-              Array(pageSize).fill(null).map((_, i) => (
-                <TableRow key={i}>
-                  <TableCell colSpan={6}>
-                    <Skeleton className="h-6" />
-                  </TableCell>
+        <Card className="relative overflow-hidden">
+          <div className="relative overflow-x-auto">
+            <Table>
+              <TableHeader>
+                <TableRow className="border-secondary/20">
+                  <TableHead className="text-accent">Timestamp</TableHead>
+                  <TableHead className="text-accent">Model</TableHead>
+                  <TableHead className="text-accent">Tokens</TableHead>
+                  <TableHead className="text-accent">Cost</TableHead>
+                  <TableHead className="text-accent">Cache</TableHead>
                 </TableRow>
-              ))
-            ) : (
-              data?.logs.map((log: Log) => (
-                <TableRow key={log.id}>
-                  <TableCell>{new Date(log.timestamp).toLocaleString()}</TableCell>
-                  <TableCell className="max-w-md truncate">{log.prompt}</TableCell>
-                  <TableCell>{log.model}</TableCell>
-                  <TableCell>{log.tokens.toLocaleString()}</TableCell>
-                  <TableCell>${log.cost.toFixed(4)}</TableCell>
-                  <TableCell>
-                    <Badge variant={log.cacheHit ? "success" : "secondary"}>
-                      {log.cacheHit ? "Hit" : "Miss"}
-                    </Badge>
-                  </TableCell>
-                </TableRow>
-              ))
-            )}
-          </TableBody>
-        </Table>
+              </TableHeader>
+              <TableBody>
+                {isLoading ? (
+                  Array(pageSize).fill(null).map((_, i) => (
+                    <TableRow key={i}>
+                      <TableCell colSpan={6}>
+                        <Skeleton className="h-6" />
+                      </TableCell>
+                    </TableRow>
+                  ))
+                ) : (
+                  data?.logs.map((log: Log) => (
+                    <TableRow key={log.id} className="border-secondary/10 hover:bg-secondary/5">
+                      <TableCell className="text-secondary">
+                        {formatDistanceToNow(new Date(log.timestamp), { addSuffix: true })}
+                      </TableCell>
+                      <TableCell className="text-primary">{log.model}</TableCell>
+                      <TableCell className="text-accent">{log.tokens.toLocaleString()}</TableCell>
+                      <TableCell className="text-warning">${log.cost.toFixed(4)}</TableCell>
+                      <TableCell>
+                        {log.cacheHit ? (
+                          <Badge variant="secondary" className="bg-accent/10 text-accent">
+                            Cache Hit
+                          </Badge>
+                        ) : log.cache === 'semantic-hit' ? (
+                          <Badge variant="secondary" className="bg-primary/10 text-primary">
+                            Semantic Hit
+                          </Badge>
+                        ) : (
+                          <Badge variant="secondary" className="bg-secondary/10 text-secondary">
+                            Cache Miss
+                          </Badge>
+                        )}
+                      </TableCell>
+                    </TableRow>
+                  ))
+                )}
+              </TableBody>
+            </Table>
+          </div>
+        </Card>
       </div>
 
       <div className="flex items-center justify-between">

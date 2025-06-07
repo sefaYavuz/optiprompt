@@ -10,22 +10,22 @@ const buttonVariants = cva(
     variants: {
       variant: {
         default:
-          "bg-[#5409DA] text-white shadow-xs hover:bg-[#4E71FF] transition-colors duration-200",
+          "bg-[#8CCDEB] text-white shadow-sm hover:bg-[#8CCDEB]/90 transition-colors duration-200",
         destructive:
-          "bg-red-600 text-white shadow-xs hover:bg-red-700",
+          "bg-destructive text-white shadow-sm hover:bg-destructive/90",
         outline:
-          "border bg-[#0d1117] text-[#8DD8FF] shadow-xs hover:bg-[#5409DA]/10 hover:border-[#4E71FF] border-[#4E71FF]/30 transition-colors duration-200",
+          "border border-[#8CCDEB]/20 bg-transparent text-[#8CCDEB] shadow-sm hover:bg-[#8CCDEB]/10 transition-colors duration-200",
         secondary:
-          "bg-[#4E71FF]/10 text-[#8DD8FF] shadow-xs hover:bg-[#4E71FF]/20",
+          "bg-[#725CAD] text-white shadow-sm hover:bg-[#725CAD]/90",
         ghost:
-          "text-[#8DD8FF] hover:bg-[#5409DA]/10 hover:text-[#BBFBFF]",
-        link: "text-[#4E71FF] underline-offset-4 hover:text-[#8DD8FF] hover:underline",
+          "text-[#8CCDEB] hover:bg-[#8CCDEB]/10",
+        link: "text-[#8CCDEB] underline-offset-4 hover:text-[#8CCDEB]/90 hover:underline",
+        gradient: "bg-[linear-gradient(45deg,#725CAD,#8CCDEB)] text-white border-0 hover:opacity-90 transition-opacity",
       },
       size: {
-        default: "h-9 px-4 py-2 has-[>svg]:px-3",
-        sm: "h-8 rounded-md gap-1.5 px-3 has-[>svg]:px-2.5",
-        lg: "h-10 rounded-md px-6 has-[>svg]:px-4",
-        icon: "size-9",
+        default: "h-9 px-4 py-2",
+        sm: "h-8 rounded-md px-3",
+        lg: "h-10 rounded-md px-8",
       },
     },
     defaultVariants: {

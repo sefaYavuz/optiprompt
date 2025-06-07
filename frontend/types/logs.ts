@@ -1,11 +1,12 @@
 export interface Log {
   id: string
   timestamp: string
-  prompt: string
   model: string
   tokens: number
   cost: number
-  cacheHit: boolean
+  cache: 'hit' | 'miss' | 'semantic-hit'
+  prompt?: string
+  response?: string
 }
 
 export interface LogsResponse {

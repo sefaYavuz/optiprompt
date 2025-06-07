@@ -6,6 +6,8 @@ import Link from "next/link"
 import { useState } from "react"
 import { motion } from "framer-motion"
 import { FADE_DOWN_ANIMATION_VARIANTS, STAGGER_ANIMATION_PROPS } from "@/lib/animations"
+import { ContainerTextFlip } from "../ui/container-text-flip"
+import { FlipWords } from "../ui/flip-words"
 
 const codeExamples = [
 	{
@@ -50,7 +52,7 @@ export function Hero() {
 	const [activeExample, setActiveExample] = useState(0)
 
 	return (
-		<section className="relative py-20 px-4 md:px-6 lg:px-8 bg-[#0d1117] min-h-[90vh] flex items-center">
+		<section className="relative py-20 px-4 md:px-6 lg:px-8 bg-background min-h-[90vh] flex items-center">
 			<div className="max-w-7xl mx-auto">
 				<div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
 					<motion.div
@@ -72,12 +74,12 @@ export function Hero() {
 							variants={FADE_DOWN_ANIMATION_VARIANTS}
 						>
 							Your AI Just Got{" "}
-							<span className="bg-gradient-to-r from-[#5409DA] via-[#4E71FF] to-[#8DD8FF] bg-clip-text text-transparent">
-								Smarter
+							<span className="relative inline-block">
+								<FlipWords className="bg-[linear-gradient(45deg,#8CCDEB,#725CAD)] bg-clip-text text-transparent" words={['Smarter', 'Cheaper']} />
 							</span>
 						</motion.h1>
 						<motion.p
-							className="text-xl text-gray-400 max-w-xl"
+							className="text-xl text-accent max-w-xl"
 							variants={FADE_DOWN_ANIMATION_VARIANTS}
 						>
 							OptiPrompt helps you cut AI costs by up to 70% through smart caching
@@ -87,19 +89,13 @@ export function Hero() {
 							className="flex items-center gap-4"
 							variants={FADE_DOWN_ANIMATION_VARIANTS}
 						>
-							<Link href="/auth/sign-in?redirect_url=/dashboard">
-								<Button
-									size="lg"
-									className="px-8"
-								>
+							<Link href="/auth/sign-up">
+								<Button size="lg" className="bg-[linear-gradient(45deg,#725CAD,#8CCDEB)] text-white hover:opacity-90 transition-opacity border-0">
 									Start Saving Now
 								</Button>
 							</Link>
 							<Link href="/docs">
-								<Button
-									variant="outline"
-									size="lg"
-								>
+								<Button variant="outline" size="lg" className="border-[#8CCDEB]/20 text-[#8CCDEB] hover:bg-[#8CCDEB]/10">
 									View Documentation
 								</Button>
 							</Link>
@@ -125,22 +121,22 @@ export function Hero() {
 							/>
 						</motion.div>
 						
-						<div
-							className="relative z-10 rounded-xl overflow-hidden border border-[#4E71FF]/20 bg-[#0d1117]"
-						>
-							<div className="flex items-center gap-2 p-4 bg-[#0d1117]/50 border-b border-[#4E71FF]/20">
+						<div className="relative z-10 rounded-xl overflow-hidden border border-border bg-background">
+							<div className="flex items-center gap-2 p-4 bg-background border-b border-border">
 								{codeExamples.map((example, index) => (
-									<button
+									<Button
 										key={example.title}
 										onClick={() => setActiveExample(index)}
+										size="lg" 
+										variant={activeExample === index ? "default" : "outline"}
 										className={`px-3 py-1 rounded-md text-sm transition-colors ${
 											activeExample === index
-												? "bg-[#5409DA] text-white"
-												: "text-[#8DD8FF]/70 hover:text-[#8DD8FF]"
+												? "bg-[linear-gradient(45deg,#725CAD,#8CCDEB)] text-white hover:opacity-90 transition-opacity border-0"
+												: "border-[#8CCDEB]/20 text-[#8CCDEB] hover:bg-[#8CCDEB]/10"
 										}`}
 									>
 										{example.title}
-									</button>
+									</Button>
 								))}
 							</div>
 							<div className="p-4 space-y-6">
@@ -150,7 +146,7 @@ export function Hero() {
 										initial={{ opacity: 0, y: 10 }}
 										animate={{ opacity: 1, y: 0 }}
 										transition={{ type: "spring" }}
-										className="font-mono text-sm text-[#8DD8FF]/70 bg-[#0d1117]/50 p-4 rounded-lg border border-[#4E71FF]/10"
+										className="font-mono text-sm text-muted-foreground/70 bg-background/50 p-4 rounded-lg border border-border/50"
 									>
 										<pre className="whitespace-pre-wrap">
 											{codeExamples[activeExample].code}
@@ -158,10 +154,10 @@ export function Hero() {
 									</motion.div>
 									<div className="relative">
 										<div className="absolute inset-0 flex items-center">
-											<div className="w-full border-t border-[#4E71FF]/20" />
+											<div className="w-full border-t border-border" />
 										</div>
 										<div className="relative flex justify-center">
-											<span className="bg-[#0d1117] px-2 text-sm text-[#8DD8FF]/50">
+											<span className="bg-background px-2 text-sm text-accent/50">
 												With OptiPrompt
 											</span>
 										</div>
@@ -171,7 +167,7 @@ export function Hero() {
 										initial={{ opacity: 0, y: 10 }}
 										animate={{ opacity: 1, y: 0 }}
 										transition={{ type: "spring", delay: 0.1 }}
-										className="font-mono text-sm text-[#8DD8FF] bg-[#5409DA]/10 p-4 rounded-lg border border-[#4E71FF]/30"
+										className="font-mono text-sm text-accent bg-secondary/10 p-4 rounded-lg border border-border"
 									>
 										<pre className="whitespace-pre-wrap">
 											{codeExamples[activeExample].optimizedCode}
@@ -183,6 +179,35 @@ export function Hero() {
 					</motion.div>
 				</div>
 			</div>
+			<motion.div 
+				className="absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2"
+				initial={{ opacity: 0, y: -10 }}
+				animate={{ opacity: 1, y: 0 }}
+				transition={{ delay: 1, duration: 0.5 }}
+			>
+				<motion.span 
+					className="text-primary text-sm"
+					animate={{ y: [0, 5, 0] }}
+					transition={{ duration: 1.5, repeat: Infinity, ease: "easeInOut" }}
+				>
+					Scroll to explore
+				</motion.span>
+				<motion.svg
+					width="16"
+					height="24"
+					viewBox="0 0 16 24"
+					fill="none"
+					xmlns="http://www.w3.org/2000/svg"
+					animate={{ y: [0, 5, 0] }}
+					transition={{ duration: 1.5, repeat: Infinity, ease: "easeInOut" }}
+				>
+					<path
+						d="M7.29289 23.7071C7.68342 24.0976 8.31658 24.0976 8.70711 23.7071L15.0711 17.3431C15.4616 16.9526 15.4616 16.3195 15.0711 15.9289C14.6805 15.5384 14.0474 15.5384 13.6569 15.9289L8 21.5858L2.34315 15.9289C1.95262 15.5384 1.31946 15.5384 0.928932 15.9289C0.538408 16.3195 0.538408 16.9526 0.928932 17.3431L7.29289 23.7071ZM7 0L7 23H9L9 0L7 0Z"
+						fill="currentColor"
+						className="text-primary opacity-50"
+					/>
+				</motion.svg>
+			</motion.div>
 		</section>
 	)
 }

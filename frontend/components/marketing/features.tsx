@@ -34,7 +34,7 @@ const features = [
 
 export function Features() {
   return (
-    <section className="py-20 px-4 md:px-6 lg:px-8 bg-[#0d1117]">
+    <section className="py-20 px-4 md:px-6 lg:px-8 bg-background">
       <div className="max-w-7xl mx-auto space-y-20">
         {/* First Feature */}
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
@@ -45,10 +45,10 @@ export function Features() {
             viewport={{ once: true, margin: "-100px" }}
             transition={{ delay: 0.2 }}
           >
-            <h2 className="text-4xl font-bold tracking-tight text-white">
+            <h2 className="text-4xl font-bold tracking-tight text-foreground">
               Give your knowledge a home
             </h2>
-            <p className="text-lg text-gray-400">
+            <p className="text-lg text-accent">
               Put your code, docs, and notes where they belong: together. With OptiPrompt, your AI pair programmer uses that context to deliver better, more tailored answers for you and your team.
             </p>
             <a
@@ -85,10 +85,10 @@ export function Features() {
             viewport={{ once: true, margin: "-100px" }}
             transition={{ delay: 0.2 }}
           >
-            <h2 className="text-4xl font-bold tracking-tight text-white">
+            <h2 className="text-4xl font-bold tracking-tight text-foreground">
               Smart caching saves you money
             </h2>
-            <p className="text-lg text-gray-400">
+            <p className="text-lg text-accent">
               OptiPrompt intelligently caches similar prompts and their responses, reducing redundant API calls and cutting costs by up to 70%.
             </p>
             <a
@@ -125,10 +125,10 @@ export function Features() {
             viewport={{ once: true, margin: "-100px" }}
             transition={{ delay: 0.2 }}
           >
-            <h2 className="text-4xl font-bold tracking-tight text-white">
+            <h2 className="text-4xl font-bold tracking-tight text-foreground">
               Real-time insights and analytics
             </h2>
-            <p className="text-lg text-gray-400">
+            <p className="text-lg text-accent">
               Get deep insights into your AI usage patterns, costs, and optimization opportunities with our powerful analytics dashboard.
             </p>
             <a
@@ -165,10 +165,10 @@ export function Features() {
             viewport={{ once: true, margin: "-100px" }}
             transition={{ delay: 0.2 }}
           >
-            <h2 className="text-4xl font-bold tracking-tight text-white">
+            <h2 className="text-4xl font-bold tracking-tight text-foreground">
               Drop-in integration
             </h2>
-            <p className="text-lg text-gray-400">
+            <p className="text-lg text-accent">
               Replace your existing AI API calls with OptiPrompt in minutes. No complex setup, no changing how you work.
             </p>
             <a
