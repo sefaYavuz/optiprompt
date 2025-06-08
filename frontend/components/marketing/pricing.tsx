@@ -5,6 +5,7 @@ import { CheckIcon } from "@heroicons/react/24/outline"
 import Link from "next/link"
 import { motion } from "framer-motion"
 import { FADE_UP_ANIMATION_VARIANTS, STAGGER_ANIMATION_PROPS } from "@/lib/animations"
+import { HoverBorderGradient } from "../ui/hover-border-gradient"
 
 const plans = [
 	{
@@ -62,8 +63,8 @@ export function Pricing() {
 							key={plan.name}
 							className={`flex flex-col justify-between relative rounded-xl border ${
 								plan.popular
-									? "border-[#725CAD] bg-[#0B1D51]/20"
-									: "border-[#725CAD]/20 bg-[#0B1D51]/10"
+									? "border-primary bg-indigo-900"
+									: "border-secondary bg-background"
 							} p-8 backdrop-blur-sm transition-all duration-300 hover:scale-105 hover:border-[#8CCDEB]/50`}
 							initial={{ opacity: 0, y: 10 }}
 							whileInView={{ opacity: 1, y: 0 }}
@@ -72,35 +73,34 @@ export function Pricing() {
 						>
 							{plan.popular && (
 								<div className="absolute -top-4 left-1/2 -translate-x-1/2">
-									<span className="bg-[#725CAD] px-4 py-1.5 rounded-full text-xs font-medium text-white shadow-lg border border-[#8CCDEB]/20">
+									<HoverBorderGradient 
+										containerClassName="rounded-full"
+										as={"span"}
+										className="bg-indigo-900/50 px-4 py-1.5 rounded-full text-xs font-medium text-white">
 										Most Popular
-									</span>
+									</HoverBorderGradient>
 								</div>
 							)}
 							<div className="mb-6">
 								<h3 className="text-xl font-bold text-[#8CCDEB] mb-2">{plan.name}</h3>
 								<div className="mb-2 flex items-baseline">
 									<span className="text-4xl font-bold text-white">{plan.price}</span>
-									<span className="text-[#725CAD] ml-2">/month</span>
+									<span className="text-secondary ml-2">/month</span>
 								</div>
 								<p className="text-[#8CCDEB]/80">{plan.description}</p>
 							</div>
 							<ul className="space-y-3 mb-6">
 								{plan.features.map((feature) => (
 									<li key={feature} className="flex items-center gap-2">
-										<CheckIcon className="h-5 w-5 text-[#8CCDEB] flex-shrink-0" />
-										<span className="text-[#8CCDEB]/80">{feature}</span>
+										<CheckIcon className="h-5 w-5 flex-shrink-0" />
+										<span className="text--500">{feature}</span>
 									</li>
 								))}
 							</ul>
 							<Link href="/auth/sign-up" className="block">
 								<Button
-									className={`w-full ${
-										plan.popular 
-											? "bg-[#725CAD] hover:bg-[#8CCDEB] text-white transition-colors" 
-											: "bg-transparent border border-[#725CAD] hover:border-[#8CCDEB] text-[#8CCDEB]"
-									}`}
-									variant={plan.popular ? "default" : "outline"}
+									className="w-full"
+									variant={plan.popular ? "gradient" : "outline"}
 								>
 									Get Started
 								</Button>

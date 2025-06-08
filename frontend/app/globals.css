@@ -1,15 +1,8 @@
 @import "tailwindcss";
 @import "tw-animate-css";
 
-@theme {
-  --color-primary: #333333; /* Primary brand color */
-  --color-secondary: #4ECDC4; /* Secondary brand color */
-  --color-background: #FFFFFF; /* Light mode background */
-  --color-accent: #8CCDEB; /* Accent color for highlights */
-  --color-text: #252525; /* Default text color */
-}
-
 @theme inline {
+  --color-gradient: var(--gradient);
   --color-background: var(--background);
   --color-foreground: var(--foreground);
   --font-sans: var(--font-geist-sans);
@@ -50,6 +43,7 @@
 }
 
 :root {
+  --gradient: linear-gradient(45deg,#725CAD,#8CCDEB);
   --radius: 0.625rem;
   --card: #FFFFFF;
   --card-foreground: #252525;
@@ -85,13 +79,14 @@
 }
 
 .dark {
-  --background: #0d1117;
+  --gradient: linear-gradient(45deg,#725CAD,#8CCDEB);
+  --background: #0f172a;
   --foreground: #FAFAFA;
   --card: #343434;
   --card-foreground: #FAFAFA;
   --popover: #343434;
   --popover-foreground: #FAFAFA;
-  --primary: #EBEBEB;
+  --primary: #8CCDEB;
   --primary-foreground: #343434;
   --secondary: #4ECDC4;
   --secondary-foreground: #FAFAFA;
@@ -100,7 +95,7 @@
   --accent: #8CCDEB;
   --accent-foreground: #FAFAFA;
   --destructive: #E11D48;
-  --border: rgba(255, 255, 255, 0.1);
+  --border: #8CCDEB;
   --input: rgba(255, 255, 255, 0.15);
   --ring: #8F8F8F;
   --chart-1: #7C5DFA;

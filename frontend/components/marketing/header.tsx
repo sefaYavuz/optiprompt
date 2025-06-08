@@ -27,7 +27,7 @@ export function MarketingHeader() {
           : "bg-background/50 backdrop-blur-sm border-transparent"
       } border-b`}
     >
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div className="max-w-7xl mx-auto py-2">
         <div className="flex h-16 items-center justify-between">
           <motion.div 
             className="flex items-center"
@@ -65,7 +65,7 @@ export function MarketingHeader() {
               </Button>
             </Link>
             <Link href="/auth/sign-up">
-              <Button className="bg-[linear-gradient(45deg,#725CAD,#8CCDEB)] hover:opacity-90 transition-opacity border-0">
+              <Button variant="gradient">
                 Get Started
               </Button>
             </Link>

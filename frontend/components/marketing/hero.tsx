@@ -90,7 +90,7 @@ export function Hero() {
 							variants={FADE_DOWN_ANIMATION_VARIANTS}
 						>
 							<Link href="/auth/sign-up">
-								<Button size="lg" className="bg-[linear-gradient(45deg,#725CAD,#8CCDEB)] text-white hover:opacity-90 transition-opacity border-0">
+								<Button size="lg" variant="gradient">
 									Start Saving Now
 								</Button>
 							</Link>
@@ -128,12 +128,8 @@ export function Hero() {
 										key={example.title}
 										onClick={() => setActiveExample(index)}
 										size="lg" 
-										variant={activeExample === index ? "default" : "outline"}
-										className={`px-3 py-1 rounded-md text-sm transition-colors ${
-											activeExample === index
-												? "bg-[linear-gradient(45deg,#725CAD,#8CCDEB)] text-white hover:opacity-90 transition-opacity border-0"
-												: "border-[#8CCDEB]/20 text-[#8CCDEB] hover:bg-[#8CCDEB]/10"
-										}`}
+										variant={activeExample === index ? "gradient" : "outline"}
+										className="px-3 py-1 rounded-md text-sm transition-colors"
 									>
 										{example.title}
 									</Button>
